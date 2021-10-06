@@ -39,3 +39,22 @@ exports.getAllProblems = (req, res) => {
           console.error(err);
        })
  }
+
+ exports.fetchUserProblems = (req, res) => {
+     let problems = [];
+     return db
+        .collection('problems')
+        .orderBy('createdAt', 'desc')
+        .where('userHandle', '==', req.params.userHandle)
+        .get()
+        .then((data) => {
+            data.forEach((doc) => {
+                problems.push(doc.data());
+            });
+            return res.json(problems);
+        })
+        .catch((err) => {
+            console.error(err);
+            res.status(500).json({error: err.code});
+        });
+ };
