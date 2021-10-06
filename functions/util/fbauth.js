@@ -1,5 +1,4 @@
-const {admin} = require('./index')
-
+const {admin, db} = require('./index')
 module.exports = (req, res, next) => {
     let idToken;
     if (req.headers.authorization && req.headers.authorization.startsWith('Bearer ')){
