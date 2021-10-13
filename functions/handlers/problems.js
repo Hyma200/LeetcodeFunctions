@@ -4,9 +4,9 @@ exports.getAllProblems = (req, res) => {
     .orderBy('createdAt', 'desc')
     .get()
        .then(data => {
-          let screams = [];
+          let problems = [];
           data.forEach(doc => {
-             screams.push({
+             problems.push({
                 problemId: doc.id,
                 title: doc.data().title,
                 userHandle: doc.data().userHandle,
@@ -14,7 +14,7 @@ exports.getAllProblems = (req, res) => {
                 createdAt: doc.data().createdAt
              });
           });
-          return res.json(screams);
+          return res.json(problems);
        })
        .catch(err => console.error(err));
  };

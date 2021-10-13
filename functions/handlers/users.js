@@ -56,6 +56,17 @@ exports.signup = (req, res) => {
        })
  };
 
+ exports.getUsers = (req, res) => {
+    db.collection('users')
+      .get()
+      .then(data => {
+         let users = []
+         data.forEach(doc => {
+            users.push(doc.id);
+         });
+         return res.json({users: users});
+      }).catch(err => console.log(err));
+ }
  exports.login = (req, res) => {
     const user = {
        email: req.body.email,
