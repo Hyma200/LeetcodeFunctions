@@ -57,7 +57,16 @@ exports.signup = (req, res) => {
  };
 
  exports.getUserInfo = (req, res) => {
-    return res.json(req.user.handle);
+    let body = {}
+    db.doc(`/users/${req.user.handle}`)
+      .get()
+      .then(doc => {
+         body.createdAt = doc.data().createdAt,
+         body.email = doc.data().email,
+         body.handle = doc.data().handle
+         return res.json(body);
+      }).catch(err => console.log(err))
+    
  }
 
  exports.getUsers = (req, res) => {
