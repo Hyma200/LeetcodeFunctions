@@ -40,6 +40,26 @@ exports.getAllProblems = (req, res) => {
        })
  }
 
+ exports.getProblemCounts = (req, res) => {
+    let problems = {};
+    return db
+      .collection('problems')
+      .where('userHandle', '==', req.params.userHandle)
+      .get()
+      .then((data) => {
+         data.forEach((doc) => {
+            doc.data().category.forEach((category) => {
+               problems[category] = problems[category] === undefined ? 1:problems[category] + 1;
+            })
+         })
+         return res.json(problems);
+      })
+      .catch((err) => {
+         console.error(err);
+         res.status(500).json({error: err.code})
+      })
+ }
+
  exports.fetchUserProblems = (req, res) => {
      let problems = [];
      return db

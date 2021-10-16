@@ -56,6 +56,10 @@ exports.signup = (req, res) => {
        })
  };
 
+ exports.getUserInfo = (req, res) => {
+    return res.json(req.user.handle);
+ }
+
  exports.getUsers = (req, res) => {
     db.collection('users')
       .get()
@@ -67,6 +71,8 @@ exports.signup = (req, res) => {
          return res.json({users: users});
       }).catch(err => console.log(err));
  }
+
+
  exports.login = (req, res) => {
     const user = {
        email: req.body.email,
